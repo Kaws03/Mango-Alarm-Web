@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="mchp.js" defer></script>
+</head>
+<body>
+<div class="tabs" id="tabs">
+    <a href="#home">Home Page</a>
+    <br>
+    <a href="#sensors">Sensors Setup</a>
+    <br>
+    <a href="#admin">Administration</a>
+    <br>
+</div>
+<div class="container">
+    <div class="home" id="home">
+	<main class="hero">
+		<div class="top-controls">
+			<div class="indicator" data-indicator-name="ledAC">
+				AC
+			</div>
+
+			<div class="indicator" data-indicator-name="ledAlarmStatus">
+				Alarm Status
+			</div>
+		</div>
+
+		<div class="main-controls">
+			<div class="controls-row">
+				<div class="indicator" data-indicator-name="ledSmoke1">
+					Smoke 1
+				</div>
+
+				<div class="indicator-temp" data-indicator-name="ledTemp1">
+					<div class="label">
+						Temp 1
+					</div>
+
+					<div class="temp-value">
+						<span data-temp-name="temp1">0</span><span> C&deg</span>
+					</div>
+				</div>
+
+				<div class="indicator" data-indicator-name="ledWater1">
+					Water 1
+				</div>
+			</div>
+
+			<div class="controls-row">
+				<div class="indicator" data-indicator-name="ledSmoke2">
+					Smoke 2
+				</div>
+
+				<div class="indicator-temp" data-indicator-name="ledTemp2">
+					<div class="label">
+						Temp 2
+					</div>
+
+					<div class="temp-value">
+						<span data-temp-name="temp2">0</span>
+						<span>C&deg</span>
+					</div>
+				</div>
+
+				<div class="indicator" data-indicator-name="ledWater2">
+					Water 2
+				</div>
+			</div>
+
+			<div class="controls-row">
+				<div class="indicator" data-indicator-name="ledSmoke3">
+					Smoke 3
+				</div>
+
+				<div class="indicator-temp" data-indicator-name="ledTemp3">
+					<div class="label">
+						Temp 3
+					</div>
+
+					<div class="temp-value">
+						<span data-temp-name="temp3">0</span>
+						<span>C&deg</span>
+					</div>
+				</div>
+
+				<div class="indicator" data-indicator-name="ledWater3">
+					Water 3
+				</div>
+			</div>
+
+			<div class="controls-row">
+				<div class="indicator" data-indicator-name="ledSmoke4">
+					Smoke 4
+				</div>
+
+				<div class="indicator-temp" data-indicator-name="ledTemp4">
+					<div class="label">
+						Temp 4
+					</div>
+
+					<div class="temp-value">
+						<span data-temp-name="temp4">0</span>
+						<span>C&deg</span>
+					</div>
+				</div>
+
+				<div class="indicator" data-indicator-name="ledWater4">
+					Water 4
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<div class="system-logs" data-system-logs>
+		</div>
+
+		<div class="switchers-row">
+			<div class="control">
+				<label for="alarmEnabled">Alarm</label>
+
+				<button class="indicator" id="alarmEnabled" onclick="newAJAXCommand('btns.cgi?btn=0');" data-button-name="ledAlarmEnabled">
+					On
+				</button>
+			</div>
+
+			<div class="control">
+				<label for="pump1">Pump 1</label>
+
+				<button class="indicator" id="pump1" onclick="newAJAXCommand('btns.cgi?btn=1');" type="button" data-button-name="ledPump1">
+					Off
+				</button>
+			</div>
+
+			<div class="control">
+				<label for="pump2">Pump 2</label>
+
+				<button class="indicator" id="pump2" onclick="newAJAXCommand('btns.cgi?btn=2');" data-button-name="ledPump2">
+					On
+				</button>
+			</div>
+
+			<div class="control">
+				<label for="plc">PLC</label>
+
+				<button class="indicator" type="button" id="plc" onclick="newAJAXCommand('btns.cgi?btn=3');" data-button-name="ledPLC">
+					On
+				</button>
+			</div>
+		</div>
+	</footer>
+</div>
+            
+<div class="sensors" id="sensors">
+    <H1>Sensors</H1>
+</div>
+
+<div class="admin" id="admin">
+    <H1>Admin</H1>
+</div>
+</div>
+</body>
+</html>
