@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta charset="UTF-8">
+            <title>Rebooting...</title>
+            <link rel="stylesheet" href="reboot.css">
+                
+    </head>
+    <div class="wrapper">
+<div id="content" class="maindiv">
+
+<h1>Restart In Progress...</h1>
+
+<p>Your settings were successfully saved, and the interface is now restarting 
+to configure itself with the new settings.</p>
+
+<p align="center"><b>Your board is now located at: 
+<a href="http://~rebootaddr~/">http://~rebootaddr~/</a></b></p>
+
+<h6></h6>
+
+<h3>Reconnection Instructions</h3>
+
+<ol>
+<li style="margin-bottom:10px"><b>Did you change the hostname, IP or MAC address?</b><br />
+	It is necessary to clear the address caches in your web browser and OS.
+	From the command prompt in Windows, enter "nbtstat&nbsp;-R" to clear the hostname cache, 
+	close your current web browser, open a new web browser, and then try to access the web address above.</li>
+<li style="margin-bottom:10px"><b>Did you try the IP address?</b><br />
+	Try accessing the board directly with the IP address that you selected
+	(ex: enter "http://192.168.5.23/" into your browser).  If this fails, then 
+	the IP address you set is not reachable.  Try the step below.</li>
+<li><b>Still not working?</b><br />
+	You can restore compile-time settings by resetting the board.
+	Press MCLR or disconnect power. 
+	This procedure restores the configuration settings in <code>tcpip_config.h</code>. 
+	You'll be able to access the board as you did when first connecting.  See the 
+	Microchip TCP/IP Stack Help distributed with the stack for instructions.
+	(If you are using an MPLAB ICD 3 or MPLAB REAL ICE<sup>TM</sup> in debug mode, 
+	MCLR will not work and you'll need to reset the board via the MPLAB IDE.)</li>
+</ol>
+</div>
+</div>
+
+<script language="javascript">
+<!--
+
+let ajaxList = [];
+
+function newAJAXCommand(url, container, repeat, data) {
+    // Set up our object
+    let newAjax = {};
+    let theTimer = new Date();
+    
+    newAjax.url = url;
+    newAjax.container = container;
+    newAjax.repeat = repeat;
+    newAjax.ajaxReq = null;
+    
+    // Create and send the request
+    if (window.XMLHttpRequest) {
+        newAjax.ajaxReq = new XMLHttpRequest();
+        newAjax.ajaxReq.open(!data ? "GET" : "POST", newAjax.url, true);
+        newAjax.ajaxReq.send(data);
+        // If we're using IE6 style (maybe 5.5 compatible too)
+    } else if (window.ActiveXObject) {
+        newAjax.ajaxReq = new ActiveXObject("Microsoft.XMLHTTP");
+        if (newAjax.ajaxReq) {
+            newAjax.ajaxReq.open(!data ? "GET" : "POST", newAjax.url, true);
+            newAjax.ajaxReq.send(data);
+        }
+    }
+    
+    newAjax.lastCalled = theTimer.getTime();
+    
+    // Store in our array
+    ajaxList.push(newAjax);
+}
+
+// Loops over all pending AJAX events to determine if any action is required
+function pollAJAX() {
+    let curAjax = {};
+    let theTimer = new Date();
+    let elapsed;
+    
+    // Read off the ajaxList objects one by one
+    for (i = ajaxList.length; i > 0; i--) {
+        curAjax = ajaxList.shift();
+        if (!curAjax)
+        continue;
+        elapsed = theTimer.getTime() - curAjax.lastCalled;
+        
+        // If we succeeded
+        if (curAjax.ajaxReq.readyState === 4 && curAjax.ajaxReq.status === 200) {
+            // If it has a container, write the result
+            if (typeof(curAjax.container) === 'function') {
+                curAjax.container(curAjax.ajaxReq.responseXML.documentElement);
+            } else if (typeof(curAjax.container) === 'string') {
+                document.getElementById(curAjax.container).innerHTML = curAjax.ajaxReq.responseText;
+            } // (otherwise do nothing for null values)
+            
+            curAjax.ajaxReq.abort();
+            curAjax.ajaxReq = null;
+            
+            // If it's a repeatable request, then do so
+            if (curAjax.repeat)
+            newAJAXCommand(curAjax.url, curAjax.container, curAjax.repeat);
+            continue;
+        }
+        
+        // If we've waited over 1 second, then we timed out
+        if (elapsed > timeOutMS) {
+            // Invoke the user function with null input
+            if (typeof(curAjax.container) === 'function') {
+                curAjax.container(null);
+            } else {
+                // Alert the user
+                alert("Command failed.\nConnection to development board was lost.");
+            }
+            
+            curAjax.ajaxReq.abort();
+            curAjax.ajaxReq = null;
+            
+            // If it's a repeatable request, then do so
+            if (curAjax.repeat)
+            newAJAXCommand(curAjax.url, curAjax.container, curAjax.repeat);
+            continue;
+        }
+        
+        // Otherwise, just keep waiting
+        ajaxList.push(curAjax);
+    }
+    
+    // Call ourselves again in 10 ms
+    setTimeout("pollAJAX()", 10);
+}
+
+function rebootDummy(x){}
+setTimeout("newAJAXCommand('/protect/reboot.cgi',rebootDummy,false);",500);
+//-->
+</script>
+</html>
